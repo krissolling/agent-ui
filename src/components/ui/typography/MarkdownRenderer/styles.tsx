@@ -123,7 +123,7 @@ const HorizontalRule = ({ className, ...props }: HorizontalRuleProps) => (
 
 const InlineCode: FC<PreparedTextProps> = ({ children }) => {
   return (
-    <code className="relative whitespace-pre-wrap rounded-sm bg-background-secondary/50 p-1">
+    <code className="relative whitespace-pre-wrap rounded-sm bg-gray-200 p-1">
       {children}
     </code>
   )
@@ -183,7 +183,7 @@ const Img = ({ src, alt }: ImgProps) => {
   return (
     <div className="w-full max-w-xl">
       {error ? (
-        <div className="flex h-40 flex-col items-center justify-center gap-2 rounded-md bg-secondary/50 text-muted">
+        <div className="flex h-40 flex-col items-center justify-center gap-2 rounded-sm bg-gray-200 text-secondary">
           <Paragraph className="text-primary">Image unavailable</Paragraph>
           <Link
             href={src}
@@ -199,7 +199,7 @@ const Img = ({ src, alt }: ImgProps) => {
           width={1280}
           height={720}
           alt={alt ?? 'Rendered image'}
-          className="size-full rounded-md object-cover"
+          className="size-full rounded-sm object-cover"
           onError={() => setError(true)}
           unoptimized
         />
@@ -209,7 +209,7 @@ const Img = ({ src, alt }: ImgProps) => {
 }
 
 const Table = ({ className, ...props }: TableProps) => (
-  <div className="w-full max-w-[560px] overflow-hidden rounded-md border border-border">
+  <div className="w-full max-w-[560px] overflow-hidden rounded-sm border border-border">
     <div className="w-full overflow-x-auto">
       <table className={cn(className, 'w-full')} {...filterProps(props)} />
     </div>
@@ -220,7 +220,7 @@ const TableHead = ({ className, ...props }: TableHeaderProps) => (
   <thead
     className={cn(
       className,
-      'rounded-md border-b border-border bg-transparent p-2 text-left text-sm font-[600]'
+      'rounded-sm border-b border-border bg-transparent p-2 text-left text-sm font-[600]'
     )}
     {...filterProps(props)}
   />

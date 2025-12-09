@@ -88,10 +88,10 @@ const SessionItem = ({
     <>
       <div
         className={cn(
-          'group flex h-11 w-full items-center justify-between rounded-lg px-3 py-2 transition-colors duration-200',
+          'group flex h-11 w-full items-center justify-between rounded-sm px-3 py-2 transition-colors duration-200',
           isSelected
-            ? 'cursor-default bg-primary/10'
-            : 'cursor-pointer bg-background-secondary hover:bg-background-secondary/80'
+            ? 'cursor-default bg-gray-200'
+            : 'cursor-pointer bg-background-subtle hover:bg-background-muted'
         )}
         onClick={handleGetSession}
       >

@@ -1,6 +1,7 @@
 import { type ElementType } from 'react'
 
 export type IconType =
+  // Provider icons
   | 'mistral'
   | 'gemini'
   | 'aws'
@@ -13,6 +14,7 @@ export type IconType =
   | 'ollama'
   | 'xai'
   | 'agno'
+  | 'rp-logo'
   | 'user'
   | 'agent'
   | 'open-ai'
@@ -36,6 +38,27 @@ export type IconType =
   | 'plus-icon'
   | 'references'
   | 'trash'
+  // App icons
+  | 'figma'
+  | 'slack'
+  | 'notion'
+  | 'github'
+  | 'linear'
+  // Agent keyword icons
+  | 'target'
+  | 'file-text'
+  | 'search'
+  | 'image'
+  | 'palette'
+  | 'bug'
+  | 'globe'
+  | 'sparkles'
+  | 'presentation'
+  | 'rocket'
+  | 'trending-up'
+  | 'book-open'
+  | 'message-circle'
+  | 'users'
 
 export interface IconProps {
   type: IconType

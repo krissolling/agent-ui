@@ -18,9 +18,8 @@ import { Skeleton } from '@/components/ui/skeleton'
 
 const ENDPOINT_PLACEHOLDER = 'NO ENDPOINT ADDED'
 const SidebarHeader = () => (
-  <div className="flex items-center gap-2">
-    <Icon type="agno" size="xs" />
-    <span className="text-xs font-medium uppercase text-white">Agent UI</span>
+  <div className="flex items-center">
+    <Icon type="rp-logo" size="default" className="h-full w-full" />
   </div>
 )
 
@@ -34,16 +33,15 @@ const NewChatButton = ({
   <Button
     onClick={onClick}
     disabled={disabled}
-    size="lg"
-    className="h-9 w-full rounded-xl bg-primary text-xs font-medium text-background hover:bg-primary/80"
+    className="h-9 w-full rounded-sm bg-black px-4 text-xs font-medium text-white hover:bg-gray-900"
   >
-    <Icon type="plus-icon" size="xs" className="text-background" />
-    <span className="uppercase">New Chat</span>
+    <Icon type="plus-icon" size="xs" className="text-white" />
+    <span className="uppercase tracking-wider">New Chat</span>
   </Button>
 )
 
 const ModelDisplay = ({ model }: { model: string }) => (
-  <div className="flex h-9 w-full items-center gap-3 rounded-xl border border-primary/15 bg-accent p-3 text-xs font-medium uppercase text-muted">
+  <div className="flex h-9 w-full items-center gap-3 rounded-sm border border-border bg-background-subtle p-3 text-xs font-medium uppercase tracking-wider text-secondary">
     {(() => {
       const icon = getProviderIcon(model)
       return icon ? <Icon type={icon} className="shrink-0" size="xs" /> : null
@@ -116,7 +114,7 @@ const Endpoint = () => {
 
   return (
     <div className="flex flex-col items-start gap-2">
-      <div className="text-xs font-medium uppercase text-primary">AgentOS</div>
+      <div className="text-xs font-medium uppercase tracking-wider text-primary">AgentOS</div>
       {isEditing ? (
         <div className="flex w-full items-center gap-1">
           <input
@@ -124,7 +122,7 @@ const Endpoint = () => {
             value={endpointValue}
             onChange={(e) => setEndpointValue(e.target.value)}
             onKeyDown={handleKeyDown}
-            className="flex h-9 w-full items-center text-ellipsis rounded-xl border border-primary/15 bg-accent p-3 text-xs font-medium text-muted"
+            className="flex h-9 w-full items-center text-ellipsis rounded-sm border border-border bg-background-subtle p-3 text-xs font-medium text-primary"
             autoFocus
           />
           <Button
@@ -139,7 +137,7 @@ const Endpoint = () => {
       ) : (
         <div className="flex w-full items-center gap-1">
           <motion.div
-            className="relative flex h-9 w-full cursor-pointer items-center justify-between rounded-xl border border-primary/15 bg-accent p-3 uppercase"
+            className="relative flex h-9 w-full cursor-pointer items-center justify-between rounded-sm border border-border bg-background-subtle p-3 uppercase"
             onMouseEnter={() => setIsHovering(true)}
             onMouseLeave={() => setIsHovering(false)}
             onClick={() => setIsEditing(true)}
@@ -168,7 +166,7 @@ const Endpoint = () => {
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <p className="text-xs font-medium text-muted">
+                  <p className="text-xs font-medium text-secondary">
                     {isMounted
                       ? truncateText(selectedEndpoint, 21) ||
                         ENDPOINT_PLACEHOLDER
@@ -236,9 +234,9 @@ const Sidebar = ({
 
   return (
     <motion.aside
-      className="relative flex h-screen shrink-0 grow-0 flex-col overflow-hidden px-2 py-3 font-dmmono"
-      initial={{ width: '16rem' }}
-      animate={{ width: isCollapsed ? '2.5rem' : '16rem' }}
+      className="relative flex h-screen shrink-0 grow-0 flex-col overflow-hidden px-4 py-4 font-dmmono"
+      initial={{ width: '20rem' }}
+      animate={{ width: isCollapsed ? '2.5rem' : '20rem' }}
       transition={{ type: 'spring', stiffness: 300, damping: 30 }}
     >
       <motion.button
@@ -255,7 +253,7 @@ const Sidebar = ({
         />
       </motion.button>
       <motion.div
-        className="w-60 space-y-5"
+        className="flex min-h-0 flex-1 w-full max-w-[calc(20rem-32px)] flex-col space-y-5"
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: isCollapsed ? 0 : 1, x: isCollapsed ? -20 : 0 }}
         transition={{ duration: 0.3, ease: 'easeInOut' }}
@@ -269,43 +267,47 @@ const Sidebar = ({
           onClick={handleNewChat}
         />
         {isMounted && (
-          <>
-            <Endpoint />
-            <AuthToken hasEnvToken={hasEnvToken} envToken={envToken} />
-            {isEndpointActive && (
-              <>
-                <motion.div
-                  className="flex w-full flex-col items-start gap-2"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.5, ease: 'easeInOut' }}
-                >
-                  <div className="text-xs font-medium uppercase text-primary">
-                    Mode
-                  </div>
-                  {isEndpointLoading ? (
-                    <div className="flex w-full flex-col gap-2">
-                      {Array.from({ length: 3 }).map((_, index) => (
-                        <Skeleton
-                          key={index}
-                          className="h-9 w-full rounded-xl"
-                        />
-                      ))}
+          <div className="flex min-h-0 flex-1 flex-col">
+            <div className="min-h-0 flex-1 space-y-5 overflow-hidden">
+              {isEndpointActive && (
+                <>
+                  <motion.div
+                    className="flex w-full flex-col items-start gap-2"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.5, ease: 'easeInOut' }}
+                  >
+                    <div className="text-xs font-medium uppercase tracking-wider text-primary">
+                      Mode
                     </div>
-                  ) : (
-                    <>
-                      <ModeSelector />
-                      <EntitySelector />
-                      {selectedModel && (agentId || teamId) && (
-                        <ModelDisplay model={selectedModel} />
-                      )}
-                    </>
-                  )}
-                </motion.div>
-                <Sessions />
-              </>
-            )}
-          </>
+                    {isEndpointLoading ? (
+                      <div className="flex w-full flex-col gap-2">
+                        {Array.from({ length: 3 }).map((_, index) => (
+                          <Skeleton
+                            key={index}
+                            className="h-9 w-full rounded-sm"
+                          />
+                        ))}
+                      </div>
+                    ) : (
+                      <>
+                        <ModeSelector />
+                        <EntitySelector />
+                        {selectedModel && (agentId || teamId) && (
+                          <ModelDisplay model={selectedModel} />
+                        )}
+                      </>
+                    )}
+                  </motion.div>
+                  <Sessions />
+                </>
+              )}
+            </div>
+            <div className="mt-auto space-y-3 border-t border-border pb-2 pt-3">
+              <Endpoint />
+              <AuthToken hasEnvToken={hasEnvToken} envToken={envToken} />
+            </div>
+          </div>
         )}
       </motion.div>
     </motion.aside>

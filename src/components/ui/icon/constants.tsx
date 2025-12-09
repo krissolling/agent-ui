@@ -12,6 +12,7 @@ import {
   OllamaLogo,
   XaiLogo,
   AgnoIcon,
+  RPLogoIcon,
   UserIcon,
   AgentIcon,
   SheetIcon,
@@ -20,7 +21,13 @@ import {
   TailwindTag,
   AgnoTag,
   ReasoningIcon,
-  ReferencesIcon
+  ReferencesIcon,
+  // App icons
+  FigmaIcon,
+  SlackIcon,
+  NotionIcon,
+  GithubIcon,
+  LinearIcon
 } from './custom-icons'
 import { IconTypeMap } from './types'
 import {
@@ -35,12 +42,28 @@ import {
   Check,
   ChevronDown,
   ChevronUp,
-  Trash
+  Trash,
+  // Agent icons
+  Target,
+  FileText,
+  Search,
+  ImageIcon,
+  Palette,
+  Bug,
+  Globe,
+  Sparkles,
+  Presentation,
+  Rocket,
+  TrendingUp,
+  BookOpen,
+  MessageCircle,
+  Users
 } from 'lucide-react'
 
 import { PlusIcon } from '@radix-ui/react-icons'
 
 export const ICONS: IconTypeMap = {
+  // Provider logos
   'open-ai': OpenAILogo,
   mistral: MistralLogo,
   gemini: GeminiLogo,
@@ -54,6 +77,7 @@ export const ICONS: IconTypeMap = {
   ollama: OllamaLogo,
   xai: XaiLogo,
   agno: AgnoIcon,
+  'rp-logo': RPLogoIcon,
   user: UserIcon,
   agent: AgentIcon,
   sheet: SheetIcon,
@@ -75,5 +99,26 @@ export const ICONS: IconTypeMap = {
   'chevron-up': ChevronUp,
   'plus-icon': PlusIcon,
   references: ReferencesIcon,
-  trash: Trash
+  trash: Trash,
+  // App icons
+  figma: FigmaIcon,
+  slack: SlackIcon,
+  notion: NotionIcon,
+  github: GithubIcon,
+  linear: LinearIcon,
+  // Agent keyword icons (Lucide)
+  target: Target,
+  'file-text': FileText,
+  search: Search,
+  image: ImageIcon,
+  palette: Palette,
+  bug: Bug,
+  globe: Globe,
+  sparkles: Sparkles,
+  presentation: Presentation,
+  rocket: Rocket,
+  'trending-up': TrendingUp,
+  'book-open': BookOpen,
+  'message-circle': MessageCircle,
+  users: Users
 }

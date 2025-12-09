@@ -13,10 +13,10 @@ const AuthToken = ({
   envToken?: string
 }) => {
   const { authToken, setAuthToken } = useStore()
+  const [isExpanded, setIsExpanded] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
   const [tokenValue, setTokenValue] = useState('')
   const [isMounted, setIsMounted] = useState(false)
-  const [isHovering, setIsHovering] = useState(false)
 
   useEffect(() => {
     // Initialize with environment variable if available and no token is set
@@ -33,13 +33,11 @@ const AuthToken = ({
     const cleanToken = tokenValue.trim()
     setAuthToken(cleanToken)
     setIsEditing(false)
-    setIsHovering(false)
   }
 
   const handleCancel = () => {
     setTokenValue(authToken)
     setIsEditing(false)
-    setIsHovering(false)
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -57,85 +55,78 @@ const AuthToken = ({
 
   const displayValue = authToken
     ? `${'*'.repeat(Math.min(authToken.length, 20))}${authToken.length > 20 ? '...' : ''}`
-    : 'NO TOKEN SET'
+    : 'No token set'
 
   return (
-    <div className="flex flex-col items-start gap-2">
-      <div className="text-xs font-medium uppercase text-primary">
-        Auth Token
-      </div>
-      {isEditing ? (
-        <div className="flex w-full items-center gap-1">
-          <input
-            type="password"
-            value={tokenValue}
-            onChange={(e) => setTokenValue(e.target.value)}
-            onKeyDown={handleKeyDown}
-            placeholder="Enter authentication token..."
-            className="flex h-9 w-full items-center text-ellipsis rounded-xl border border-primary/15 bg-accent p-3 text-xs font-medium text-muted placeholder:text-muted/50"
-            autoFocus
-          />
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={handleSave}
-            className="hover:cursor-pointer hover:bg-transparent"
-          >
-            <Icon type="save" size="xs" />
-          </Button>
-        </div>
-      ) : (
-        <div className="flex w-full items-center gap-1">
+    <div className="flex flex-col items-start">
+      <button
+        onClick={() => setIsExpanded(!isExpanded)}
+        className="flex w-full items-center justify-between py-2 text-xs font-medium uppercase tracking-wider text-secondary hover:text-primary"
+      >
+        <span>Auth Token</span>
+        <motion.div
+          animate={{ rotate: isExpanded ? 180 : 0 }}
+          transition={{ duration: 0.2 }}
+        >
+          <Icon type="chevron-down" size="xs" />
+        </motion.div>
+      </button>
+
+      <AnimatePresence>
+        {isExpanded && (
           <motion.div
-            className="relative flex h-9 w-full cursor-pointer items-center justify-between rounded-xl border border-primary/15 bg-accent p-3 uppercase"
-            onMouseEnter={() => setIsHovering(true)}
-            onMouseLeave={() => setIsHovering(false)}
-            onClick={() => setIsEditing(true)}
-            transition={{ type: 'spring', stiffness: 400, damping: 10 }}
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="w-full overflow-hidden"
           >
-            <AnimatePresence mode="wait">
-              {isHovering ? (
-                <motion.div
-                  key="token-display-hover"
-                  className="absolute inset-0 flex items-center justify-center"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <p className="flex items-center gap-2 whitespace-nowrap text-xs font-medium text-primary">
-                    <Icon type="edit" size="xxs" /> EDIT TOKEN
-                  </p>
-                </motion.div>
+            <div className="flex flex-col gap-2 pb-2">
+              {isEditing ? (
+                <div className="flex w-full items-center gap-1">
+                  <input
+                    type="password"
+                    value={tokenValue}
+                    onChange={(e) => setTokenValue(e.target.value)}
+                    onKeyDown={handleKeyDown}
+                    placeholder="Enter token..."
+                    className="flex h-9 w-full items-center text-ellipsis rounded-sm border border-border bg-white p-3 text-xs text-primary placeholder:text-secondary"
+                    autoFocus
+                  />
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={handleSave}
+                    className="shrink-0 hover:cursor-pointer hover:bg-transparent"
+                  >
+                    <Icon type="save" size="xs" />
+                  </Button>
+                </div>
               ) : (
-                <motion.div
-                  key="token-display"
-                  className="absolute inset-0 flex items-center justify-between px-3"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <p className="text-xs font-medium text-muted">
-                    {isMounted ? displayValue : 'NO TOKEN SET'}
-                  </p>
-                </motion.div>
+                <div className="flex w-full items-center gap-1">
+                  <div
+                    onClick={() => setIsEditing(true)}
+                    className="flex h-9 w-full cursor-pointer items-center rounded-sm border border-border bg-white p-3 text-xs text-secondary hover:border-border-strong"
+                  >
+                    {isMounted ? displayValue : 'No token set'}
+                  </div>
+                  {authToken && (
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={handleClear}
+                      className="shrink-0 hover:cursor-pointer hover:bg-transparent"
+                      title="Clear token"
+                    >
+                      <Icon type="x" size="xs" />
+                    </Button>
+                  )}
+                </div>
               )}
-            </AnimatePresence>
+            </div>
           </motion.div>
-          {authToken && (
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={handleClear}
-              className="hover:cursor-pointer hover:bg-transparent"
-              title="Clear token"
-            >
-              <Icon type="x" size="xs" />
-            </Button>
-          )}
-        </div>
-      )}
+        )}
+      </AnimatePresence>
     </div>
   )
 }

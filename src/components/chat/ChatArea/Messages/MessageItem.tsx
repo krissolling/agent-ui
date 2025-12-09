@@ -6,10 +6,36 @@ import Videos from './Multimedia/Videos'
 import Images from './Multimedia/Images'
 import Audios from './Multimedia/Audios'
 import { memo } from 'react'
+import { useQueryState } from 'nuqs'
+import Image from 'next/image'
 import AgentThinkingLoader from './AgentThinkingLoader'
 
 interface MessageProps {
   message: ChatMessage
+}
+
+const AgentAvatar = () => {
+  const { agents } = useStore()
+  const [agentId] = useQueryState('agent')
+
+  const currentAgent = agents.find(a => a.id === agentId)
+  const avatarUrl = currentAgent?.avatar
+
+  if (avatarUrl) {
+    return (
+      <div className="size-6 overflow-hidden rounded-full">
+        <Image
+          src={avatarUrl}
+          alt={currentAgent?.name || 'Agent'}
+          width={24}
+          height={24}
+          className="size-full object-cover"
+        />
+      </div>
+    )
+  }
+
+  return <Icon type="agent" size="sm" />
 }
 
 const AgentMessage = ({ message }: MessageProps) => {
@@ -71,7 +97,7 @@ const AgentMessage = ({ message }: MessageProps) => {
   return (
     <div className="flex flex-row items-start gap-4 font-geist">
       <div className="flex-shrink-0">
-        <Icon type="agent" size="sm" />
+        <AgentAvatar />
       </div>
       {messageContent}
     </div>
@@ -84,7 +110,7 @@ const UserMessage = memo(({ message }: MessageProps) => {
       <div className="flex-shrink-0">
         <Icon type="user" size="sm" />
       </div>
-      <div className="text-md rounded-lg font-geist text-secondary">
+      <div className="text-md rounded-lg font-geist text-primary">
         {message.content}
       </div>
     </div>

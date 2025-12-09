@@ -33,7 +33,7 @@ interface ReferenceItemProps {
 }
 
 const ReferenceItem: FC<ReferenceItemProps> = ({ reference }) => (
-  <div className="relative flex h-[63px] w-[190px] cursor-default flex-col justify-between overflow-hidden rounded-md bg-background-secondary p-3 transition-colors hover:bg-background-secondary/80">
+  <div className="relative flex h-[63px] w-[190px] cursor-default flex-col justify-between overflow-hidden rounded-sm bg-background-secondary p-3 transition-colors hover:bg-background-secondary/80">
     <p className="text-sm font-medium text-primary">{reference.name}</p>
     <p className="truncate text-xs text-primary/40">{reference.content}</p>
   </div>
@@ -127,7 +127,7 @@ const AgentMessageWrapper = ({ message }: MessageWrapperProps) => {
 }
 const Reasoning: FC<ReasoningStepProps> = ({ index, stepTitle }) => (
   <div className="flex items-center gap-2 text-secondary">
-    <div className="flex h-[20px] items-center rounded-md bg-background-secondary p-2">
+    <div className="flex h-[20px] items-center rounded-sm bg-background-secondary p-2">
       <p className="text-xs">STEP {index + 1}</p>
     </div>
     <p className="text-xs">{stepTitle}</p>

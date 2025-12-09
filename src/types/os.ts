@@ -67,6 +67,7 @@ export interface Agent {
   description: string
   model: Model
   storage?: boolean
+  avatar?: string
 }
 
 export interface Team {
@@ -214,15 +215,19 @@ export interface ChatMessage {
 export interface AgentDetails {
   id: string
   name?: string
+  description?: string
   db_id?: string
   // Model
   model?: Model
+  avatar?: string
 }
 
 export interface TeamDetails {
   id: string
   name?: string
+  description?: string
   db_id?: string
+  avatar?: string
 
   // Model
   model?: Model
