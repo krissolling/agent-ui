@@ -42,11 +42,13 @@ const AgentHeader = () => {
           <h1 className="font-dmmono text-sm font-medium uppercase tracking-wider text-primary">
             {currentEntity.name || currentEntity.id}
           </h1>
-          {currentEntity.description && (
-            <p className="line-clamp-2 text-sm text-secondary">
-              {currentEntity.description}
-            </p>
-          )}
+          <p className="line-clamp-2 text-sm text-secondary">
+            {currentEntity.description || (
+              <span className="italic text-muted">
+                No description set. Add a description parameter to this {mode}.
+              </span>
+            )}
+          </p>
         </div>
       </motion.div>
     </AnimatePresence>
