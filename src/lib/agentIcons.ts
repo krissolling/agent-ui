@@ -28,6 +28,8 @@ const KEYWORD_ICON_MAP: Array<{ keywords: string[]; icon: IconType }> = [
   { keywords: ['github'], icon: 'github' },
   { keywords: ['linear'], icon: 'linear' },
   // Generic agent icons
+  { keywords: ['proposal', 'deck'], icon: 'figma' },
+  { keywords: ['scheduler', 'schedule'], icon: 'calendar' },
   { keywords: ['brief', 'analyst'], icon: 'target' },
   { keywords: ['interview', 'guide'], icon: 'file-text' },
   { keywords: ['scout', 'competitor'], icon: 'search' },

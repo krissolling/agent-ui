@@ -57,7 +57,8 @@ import {
   TrendingUp,
   BookOpen,
   MessageCircle,
-  Users
+  Users,
+  Calendar
 } from 'lucide-react'
 
 import { PlusIcon } from '@radix-ui/react-icons'
@@ -120,5 +121,6 @@ export const ICONS: IconTypeMap = {
   'trending-up': TrendingUp,
   'book-open': BookOpen,
   'message-circle': MessageCircle,
-  users: Users
+  users: Users,
+  calendar: Calendar
 }

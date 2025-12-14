@@ -1,6 +1,6 @@
 'use client'
 
-import { FC, useState } from 'react'
+import React, { FC, useState } from 'react'
 
 import Image from 'next/image'
 import Link from 'next/link'
@@ -123,9 +123,51 @@ const HorizontalRule = ({ className, ...props }: HorizontalRuleProps) => (
 
 const InlineCode: FC<PreparedTextProps> = ({ children }) => {
   return (
-    <code className="relative whitespace-pre-wrap rounded-sm bg-gray-200 p-1">
+    <code className="relative whitespace-pre-wrap rounded-sm bg-background-muted px-1.5 py-0.5 text-[0.85em] font-mono">
       {children}
     </code>
+  )
+}
+
+// Code block component for fenced code (```)
+const CodeBlock: FC<{ children?: React.ReactNode; className?: string }> = ({ children, className }) => {
+  const [copied, setCopied] = useState(false)
+
+  // Extract text content from children
+  const getTextContent = (node: React.ReactNode): string => {
+    if (typeof node === 'string') return node
+    if (typeof node === 'number') return String(node)
+    if (!node) return ''
+    if (Array.isArray(node)) return node.map(getTextContent).join('')
+    if (React.isValidElement(node)) {
+      const props = node.props as { children?: React.ReactNode }
+      return getTextContent(props.children)
+    }
+    return ''
+  }
+
+  const handleCopy = async () => {
+    const text = getTextContent(children)
+    await navigator.clipboard.writeText(text)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
+
+  return (
+    <div className="group relative my-3 w-full">
+      <pre className={cn(
+        "overflow-x-auto rounded-md bg-background-subtle p-4 text-[0.85em] font-mono leading-relaxed",
+        className
+      )}>
+        {children}
+      </pre>
+      <button
+        onClick={handleCopy}
+        className="absolute right-2 top-2 rounded-md bg-background/80 px-2 py-1 text-xs text-muted-foreground opacity-0 transition-opacity hover:bg-background hover:text-foreground group-hover:opacity-100"
+      >
+        {copied ? 'Copied!' : 'Copy'}
+      </button>
+    </div>
   )
 }
 
@@ -209,7 +251,7 @@ const Img = ({ src, alt }: ImgProps) => {
 }
 
 const Table = ({ className, ...props }: TableProps) => (
-  <div className="w-full max-w-[560px] overflow-hidden rounded-sm border border-border">
+  <div className="w-full overflow-hidden rounded-sm border border-border">
     <div className="w-full overflow-x-auto">
       <table className={cn(className, 'w-full')} {...filterProps(props)} />
     </div>
@@ -269,6 +311,7 @@ export const components = {
   hr: HorizontalRule,
   blockquote: Blockquote,
   code: InlineCode,
+  pre: CodeBlock,
   a: AnchorLink,
   img: Img,
   p: Paragraph,

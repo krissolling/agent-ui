@@ -25,6 +25,9 @@ const AgentHeader = () => {
     currentEntity.avatar
   )
 
+  // Check if agent is public (default true, only false if explicitly set)
+  const isPublic = currentEntity.metadata?.public !== false
+
   return (
     <AnimatePresence mode="wait">
       <motion.div
@@ -39,11 +42,17 @@ const AgentHeader = () => {
           <Icon type={iconType} size="sm" />
         </div>
         <div className="flex min-w-0 flex-col gap-0.5">
-          <h1 className="font-dmmono text-sm font-medium uppercase tracking-wider text-primary">
-            {currentEntity.name || currentEntity.id}
-          </h1>
+          <div className="flex items-center gap-2">
+            <h1 className="font-dmmono text-sm font-medium uppercase tracking-wider text-primary">
+              {currentEntity.name || currentEntity.id}
+            </h1>
+            <span
+              className={`size-2 rounded-full ${isPublic ? 'bg-positive' : 'bg-destructive'}`}
+              title={isPublic ? 'Public' : 'Private (dev only)'}
+            />
+          </div>
           <p className="line-clamp-2 text-sm text-secondary">
-            {currentEntity.description || (
+            {currentEntity.description || (currentEntity.metadata?.description as string) || (
               <span className="italic text-muted">
                 No description set. Add a description parameter to this {mode}.
               </span>

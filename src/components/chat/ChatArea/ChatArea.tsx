@@ -9,7 +9,7 @@ const ChatArea = () => {
     <main className="relative m-1.5 flex flex-grow flex-col rounded-xl bg-background">
       <AgentHeader />
       <MessageArea />
-      <div className="sticky bottom-0 ml-9 px-4 pb-2">
+      <div className="sticky bottom-0 mx-auto w-full max-w-[750px] px-4 pb-2">
         <ChatInput />
       </div>
     </main>

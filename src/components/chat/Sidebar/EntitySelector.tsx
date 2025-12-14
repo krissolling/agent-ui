@@ -103,6 +103,13 @@ export function EntitySelector() {
             >
               <Icon type={iconType} size="sm" className="shrink-0" />
               <span className="truncate">{entity.name || entity.id}</span>
+              <span
+                className={cn(
+                  'ml-auto h-2 w-2 shrink-0 rounded-full',
+                  entity.metadata?.public === false ? 'bg-destructive' : 'bg-positive'
+                )}
+                title={entity.metadata?.public === false ? 'Private (dev only)' : 'Public'}
+              />
             </button>
           )
         })}
@@ -131,6 +138,13 @@ export function EntitySelector() {
               <div className="flex w-full items-center gap-2 text-xs font-medium uppercase tracking-wider">
                 <Icon type={iconType} size="sm" className="shrink-0" />
                 <span className="truncate">{entity.name || entity.id}</span>
+                <span
+                  className={cn(
+                    'ml-auto h-2 w-2 shrink-0 rounded-full',
+                    entity.metadata?.public === false ? 'bg-destructive' : 'bg-positive'
+                  )}
+                  title={entity.metadata?.public === false ? 'Private (dev only)' : 'Public'}
+                />
               </div>
             </SelectItem>
           )

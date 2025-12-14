@@ -220,6 +220,7 @@ export interface AgentDetails {
   // Model
   model?: Model
   avatar?: string
+  metadata?: Record<string, unknown>
 }
 
 export interface TeamDetails {
@@ -228,6 +229,7 @@ export interface TeamDetails {
   description?: string
   db_id?: string
   avatar?: string
+  metadata?: Record<string, unknown>
 
   // Model
   model?: Model

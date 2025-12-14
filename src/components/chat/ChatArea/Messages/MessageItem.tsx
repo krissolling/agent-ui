@@ -54,7 +54,7 @@ const AgentMessage = ({ message }: MessageProps) => {
     )
   } else if (message.content) {
     messageContent = (
-      <div className="flex w-full flex-col gap-4">
+      <div className="flex w-full max-w-[55ch] flex-col gap-4">
         <MarkdownRenderer>{message.content}</MarkdownRenderer>
         {message.videos && message.videos.length > 0 && (
           <Videos videos={message.videos} />
@@ -76,7 +76,7 @@ const AgentMessage = ({ message }: MessageProps) => {
       )
     } else {
       messageContent = (
-        <div className="flex w-full flex-col gap-4">
+        <div className="flex w-full max-w-[55ch] flex-col gap-4">
           <MarkdownRenderer>
             {message.response_audio.transcript}
           </MarkdownRenderer>
@@ -110,7 +110,7 @@ const UserMessage = memo(({ message }: MessageProps) => {
       <div className="flex-shrink-0">
         <Icon type="user" size="sm" />
       </div>
-      <div className="text-md rounded-lg font-geist text-primary">
+      <div className="text-md max-w-[55ch] rounded-lg font-geist text-primary">
         {message.content}
       </div>
     </div>

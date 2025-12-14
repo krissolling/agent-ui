@@ -145,11 +145,24 @@ const Reasonings: FC<ReasoningProps> = ({ reasoning }) => (
   </div>
 )
 
-const ToolComponent = memo(({ tools }: ToolCallProps) => (
-  <div className="cursor-default rounded-full bg-accent px-2 py-1.5 text-xs">
-    <p className="font-dmmono uppercase text-primary/80">{tools.tool_name}</p>
-  </div>
-))
+const ToolComponent = memo(({ tools }: ToolCallProps) => {
+  // Tool is in progress if it has no metrics.time (completion time) and no error
+  const isInProgress = !tools.metrics?.time && !tools.tool_call_error
+
+  return (
+    <div className={`flex items-center gap-2 rounded-full px-2 py-1.5 text-xs ${isInProgress ? 'bg-accent/60' : 'bg-accent'}`}>
+      {isInProgress && (
+        <div className="flex items-center gap-0.5">
+          <div className="size-1.5 animate-pulse rounded-full bg-primary/40" />
+        </div>
+      )}
+      <p className="font-dmmono uppercase text-primary/80">{tools.tool_name}</p>
+      {isInProgress && (
+        <span className="animate-pulse text-primary/50">...</span>
+      )}
+    </div>
+  )
+})
 ToolComponent.displayName = 'ToolComponent'
 const Messages = ({ messages }: MessageListProps) => {
   if (messages.length === 0) {

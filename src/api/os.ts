@@ -99,6 +99,12 @@ export const getSessionAPI = async (
     }
   )
 
+  // Return empty array for 404s (session not found) - this is expected
+  // when using client-generated session IDs that haven't been persisted yet
+  if (response.status === 404) {
+    return { data: [] }
+  }
+
   if (!response.ok) {
     throw new Error(`Failed to fetch session: ${response.statusText}`)
   }

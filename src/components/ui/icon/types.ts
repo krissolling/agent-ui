@@ -59,6 +59,7 @@ export type IconType =
   | 'book-open'
   | 'message-circle'
   | 'users'
+  | 'calendar'
 
 export interface IconProps {
   type: IconType
